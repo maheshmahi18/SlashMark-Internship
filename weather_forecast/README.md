@@ -60,4 +60,5 @@ OPENWEATHERMAP_API_KEY=YOUR_API_KEY
 
 ## License
 
+[MIT License](LICENSE)
 This project is licensed under the MIT License. Feel free to use and modify it according to the terms of the license.
