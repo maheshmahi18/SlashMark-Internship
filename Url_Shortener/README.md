@@ -85,4 +85,5 @@ Contributions are welcome! If you want to contribute to this project:
 
 ## License
 
+[MIT License](LICENSE)
 This project is licensed under the MIT License. See the LICENSE file for more information.
