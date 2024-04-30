@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    #shortUrlContainer {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>URL Shortener</h1>
+    <form id="shortenForm">
+      <label for="urlInput">Enter URL:</label><br>
+      <input type="text" id="urlInput" name="url" required><br>
+      <input type="checkbox" id="termsCheckbox" name="terms" required>
+      <label for="termsCheckbox">I accept the terms and conditions</label><br>
+      <button type="submit">Shorten URL</button>
+    </form>
+    <div id="shortUrlContainer">
+      <p>Shortened URL:</p>
+      <p id="shortUrl"></p>
+    </div>
+    <p>Note: This is a static page. It will serve until the server is on.</p>
+  </div>
+
+  <script>
+    document.getElementById('shortenForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const urlInput = document.getElementById('urlInput').value;
+      const termsCheckbox = document.getElementById('termsCheckbox').checked;
+
+      if (!termsCheckbox) {
+        alert('Please accept the terms and conditions');
+        return;
+      }
+
+      try {
+        const response = await fetch('/shorten', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ originalUrl: urlInput })
+        });
+        const data = await response.json();
+        document.getElementById('shortUrl').textContent = data.shortUrl;
+        document.getElementById('shortUrlContainer').style.display = 'block';
+      } catch (error) {
+        console.error('Error shortening URL:', error);
+        alert('An error occurred while shortening the URL. Please try again later.');
+      }
+    });
+  </script>
+</body>
+</html>
